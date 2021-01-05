@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <div th:replace="fragments/head"></div>
+
+  <body class="">
+    <div class="wrapper">
+      <div th:replace="fragments/sidebar"></div>
+
+      <div class="main-panel">
+        <!-- Navbar -->
+        <div th:replace="fragments/navbar"></div>
+        <!-- End Navbar -->
+        <div class="content">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Update Report</h5>
+                  <p class="card-category">
+                    Please check the form data before create an action
+                  </p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Date</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            placeholder="Date"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label>Originator</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Originator"
+                            value="Originator Name"
+                            readonly="readonly"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label>Select Floor</label>
+                          <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label>Select Room</label>
+                          <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label>Description</label>
+                          <textarea
+                            type="text"
+                            class="form-control textarea"
+                            placeholder="Problem Description"
+                            rows="5"
+                          ></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label>Image Attachments</label>
+                          <input type="file" class="form-control-file" />
+                          <small class="form-text text-muted"
+                            >You can upload more than 1 images</small
+                          >
+                        </div>
+                      </div>
+                      <div class="col-md-12 justify-content-between">
+                        <button type="submit" class="btn btn-primary">
+                          Update
+                        </button>
+                        <button type="reset" class="btn btn-danger">
+                          Reset Form
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="card-footer">
+                  <hr />
+                  <div class="stats">
+                    <i class="fas fa-check-double"></i> Check your form again
+                    before submit
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Update Priority</h5>
+                  <p class="card-category">
+                    please pay close attention to set the priority
+                  </p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Set Priority</label>
+                          <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 justify-content-between">
+                        <button type="submit" class="btn btn-primary">
+                          Set Priority
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="card-footer">
+                  <hr />
+                  <div class="stats">
+                    <i class="fas fa-check-double"></i> if priority high, system
+                    will notified HSE automaticaly
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div th:replace="fragments/footer"></div>
+      </div>
+    </div>
+    <div th:replace="fragments/script"></div>
+  </body>
+</html>

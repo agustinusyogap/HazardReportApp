@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper ">
+
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header">
+                                    <h5 class="card-title">Manage Report</h5>
+                                    <p class="card-category">Check report and give an action</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row justify-content-end">
+                                        <a class="btn btn-primary mr-3" href="/admin/user/add">Add User</a>
+                                    </div>
+                                    <table class="table" id="datatable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Full name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Roles</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="as, iterator : ${users}">
+                                                <th scope="row" th:text="${iterator.index+1}"></th>
+                                                <td th:text="${as.name}"></td>
+                                                <td th:text="${as.email}"></td>
+                                                <td th:text="${as.roles.name}"></td>
+                                                <td>
+                                                    <a th:href="@{/admin/user/} + ${as.username}" class="btn btn-info btn-sm">Edit</a>
+                                                    <a th:href="@{/admin/user/delete/} + ${as.username}" class="btn btn-danger btn-sm">Delete</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer ">
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+
+</html>

@@ -1,0 +1,25 @@
+{
+    "name": "HazardReport",
+    "short_name": "HRApp",
+    "icons": [
+        {
+            "src": "/icons/icon-72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/xxhdpi.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/xhdpi.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000",
+    "theme_color": "#2c3e50"
+}

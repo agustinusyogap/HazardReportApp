@@ -1,0 +1,56 @@
+<div class="tab-pane fade show" id="address" role="tabpanel" aria-labelledby="address-tab" th:fragment="address">
+    <div class="content pt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <form th:object="${address}" th:action="@{/profile/address/perform_update}" method="post">
+                    <div class="editable">
+                        <input type="hidden" readonly class="form-control plaintext" id="Name" th:field="*{id}">
+                        <div class="form-group row">
+                            <label for="Name" class="col-sm-3 col-form-label form-identifier">Street 1</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control plaintext" th:field="*{street1}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Street" class="col-sm-3 col-form-label form-identifier">Street 2</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control plaintext" th:field="*{street2}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Birth" class="col-sm-3 col-form-label form-identifier">Province</label>
+                            <div class="col-sm-9">
+                                <select type="text" readonly class="form-control plaintext" th:field="*{province}">
+                                    <option value="selectFirst">-- Select Province --</option>
+                                </select>
+                                <input type="hidden" id="provinceTemp" th:value="*{province}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Gender" class="col-sm-3 col-form-label form-identifier">City</label>
+                            <div class="col-sm-9">
+                                <select type="text" readonly class="form-control plaintext" th:field="*{city}">
+                                    <option value="selectFirst">-- Select City --</option>
+                                </select>
+                            </div>
+                            <input type="hidden" id="cityTemp" th:value="*{city}">
+                        </div>
+                        <div class="form-group row">
+                            <label for="Birth" class="col-sm-3 col-form-label form-identifier">Zip Code</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control plaintext" id="zipcode" th:field="*{zipCode}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-bar text-right">
+                        <a href="javascript:void(0)" class="btn btn-info bg-my-color editButton" onclick="editButton()">Edit Profile</a>
+                        <div class="hidden">
+                            <button class="btn btn-info bg-my-color" id="controlForm" type="submit">Save Changes</button>
+                            <a href="#" class="btn btn-info btn-danger" id="controlForm" onclick="cancelButton()">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

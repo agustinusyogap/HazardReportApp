@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Manage Room</h5>
+                                    <p class="card-category">Create, update, delete room</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button type="button" class="btn btn-primary add-modal" data-toggle="modal" data-target="#roomModal">
+                                                Add Data
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <table class="table" id="datatable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">FLoor</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="as, iterator : ${rooms}">
+                                                <th scope="row" th:text="${iterator.index+1}"></th>
+                                                <td th:text="${as.name}"></td>
+                                                <td th:text="${as.floor.name}"></td>
+                                                <td th:text="${as.description}"></td>
+                                                <td>
+                                                    <a th:href="@{/fladmin/room/perform_delete/} + ${as.id}" class="btn btn-danger btn-sm mr-1">Delete</a>
+                                                    <a href="#"
+                                                       class="btn btn-info btn-sm edit-modal"
+                                                       data-toggle="modal"
+                                                       data-target="#roomModal"
+                                                       th:data-id="${as.id}"
+                                                       th:data-name="${as.name}"
+                                                       th:data-description="${as.description}"
+                                                       >Edit</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/modals/roomModal"></div>
+        <div th:replace="fragments/script"></div>
+        <script>
+            $(document).on("click", ".edit-modal", function () {
+
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var description = $(this).data('description');
+
+                $(".modal-body #id").val(id);
+                $(".modal-body #name").val(name);
+                $(".modal-body #description").val(description);
+            });
+
+            $(document).on("click", ".add-modal", function () {
+                $(".modal-body #id").val("");
+                $(".modal-body #name").val("");
+                $(".modal-body #description").val("");
+            });
+        </script>
+    </body>
+</html>

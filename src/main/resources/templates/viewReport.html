@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Report Detail</h5>
+                                    <p class="card-category">Detail of report</p>
+                                </div>
+                                <div class="card-body">
+                                    <div th:each="as : ${report}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Date</label>
+                                                    <div th:text="${#dates.format(as.date, 'HH:mm, dd MMMM yyyy')}"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Originator</label>
+                                                    <div th:text="${as.originator.name}"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Room Location</label>
+                                                    <div th:text="${as.room.floor.name} + ', ' + ${as.room.name}"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <div th:utext="${as.description}"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Image Attachments</label>
+                                                    <div class="row">
+                                                        <div class="image-box col-md-4" th:each="image : ${as.imageAttachmentsList}">
+                                                            <img th:src="@{/files/}+${image.imagePath}" width="100%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <a href="/admin/report" class="btn btn-danger">
+                                                    Back to report list
+                                                </a>
+                                                <a th:href="@{/admin/report/history/} + ${reportId}" class="btn btn-info">
+                                                    History
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div th:if="${as.priority.id == 4}" th:each="as : ${report}" class="card" sec:authorize="hasAnyAuthority('HSE', 'FW')">
+                                <div class="card-header">
+                                    <h5 class="card-title">Set Priority</h5>
+                                    <p class="card-category">Before set priority, check the report first</p>
+                                </div>
+                                <div class="card-body">
+                                    <form th:action="@{/admin/report/modify/} + ${reportId} + @{/priority}" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Set priority</label>
+                                                    <select class="form-control" name="priority">
+                                                        <option th:each="as : ${priority}" th:value="${as.id}" th:text="${as.name}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 justify-content-between">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Submit
+                                                </button>
+                                                <button type="reset" class="btn btn-danger">
+                                                    Reset Form
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:each="as : ${report}" th:if="${as.priority.id != 4}" class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Action List</h5>
+                                    <p class="card-category">below is a list of actions</p>
+                                </div>
+                                <div class="card-body">
+                                    <div th:if="${as.currentStatus.id != 6}">
+                                        <a th:if="${as.currentStatus.id >= 4 and as.priority.id == 3}" th:href="@{/admin/report/} + ${reportId} + @{/action/new/}" class="btn btn-danger" sec:authorize="hasAuthority('HSE')">Add Action</a>
+                                        <a th:if="${as.currentStatus.id < 4 and as.priority.id != 3}" th:href="@{/admin/report/} + ${reportId} + @{/action/new/}" class="btn btn-danger" sec:authorize="hasAuthority('FW')">Add Action</a>
+                                        <a th:if="${as.currentStatus.id < 4 and as.priority.id == 3}" th:href="@{/admin/report/} + ${reportId} + @{/action/new/}" class="btn btn-danger" sec:authorize="hasAuthority('FW')">Add Temporary Action</a>
+                                    </div>
+                                    <div class="list-group list-group-flush">
+                                        <a th:each="as, iterator : ${action}"
+                                           th:href="@{/admin/report/} + ${reportId} + @{/action/view/} + ${as.id}"
+                                           class="list-group-item list-group-item-action" th:text="${iterator.index + 1} + '. ' + ${#dates.format(as.date, 'HH:mm, dd MMMM yyyy')}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+</html>

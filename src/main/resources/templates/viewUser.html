@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">User Detail</h5>
+                                    <p class="card-category">Fill the form with valid data</p>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/admin/user/add" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="Name"
+                                                        th:field="${user.name}"
+                                                        readonly="readonly"
+                                                    />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <input
+                                                        type="email"
+                                                        class="form-control"
+                                                        placeholder="Email"
+                                                        th:field="${user.email}"
+                                                        readonly="readonly"
+                                                    />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Username</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="Username"
+                                                        th:field="${user.username}"
+                                                        readonly="readonly"
+                                                    />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Phone</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="Phone"
+                                                        th:field="${user.phone}"
+                                                        readonly="readonly"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Set Roles</h5>
+                                    <p class="card-category">Fill the form with valid data</p>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/admin/user/setrole" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="hidden" name="username" th:value="${user.username}">
+                                                <div class="form-group">
+                                                    <label>Set Role</label>
+                                                    <select name="roles" id="roles" class="form-control">
+                                                        <option th:each="as : ${roles}" th:value="${as.id}" th:text="${as.name}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 justify-content-between">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Apply
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+</html>

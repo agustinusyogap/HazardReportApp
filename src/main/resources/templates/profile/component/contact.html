@@ -1,0 +1,45 @@
+
+<div class="tab-pane fade show" id="contact" role="tabpanel" aria-labelledby="contact-tab" th:fragment="contact">
+    <div class="content pt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <form th:object="${contact}" th:action="@{/profile/contact/perform_update}" method="post">
+                    <div class="editable">
+                        <input type="hidden" readonly class="form-control plaintext" id="Name" th:field="*{id}">
+                        <div class="form-group row">
+                            <label for="Phone" class="col-sm-3 col-form-label form-identifier">Phone</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control plaintext" id="phone" th:field="*{phone}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Instagram" class="col-sm-3 col-form-label form-identifier">Instagram</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control plaintext" id="insagram" th:field="*{instagram}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Linkedin" class="col-sm-3 col-form-label form-identifier">Linkedin</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control plaintext" id="linkedin" th:field="*{linkedin}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Facebook" class="col-sm-3 col-form-label form-identifier">Facebook</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control plaintext" id="facebook" th:field="*{facebook}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-bar text-right">
+                        <a href="javascript:void(0)" class="btn btn-info bg-my-color editButton" onclick="editButton()">Edit Profile</a>
+                        <div class="hidden">
+                            <button class="btn btn-info bg-my-color" id="controlForm" type="submit">Save Changes</button>
+                            <a href="#" class="btn btn-info btn-danger" id="controlForm" onclick="cancelButton()">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

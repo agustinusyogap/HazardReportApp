@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div class="main-panel" style="width: 100%">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title text-center">Sorry about this</h5>
+                                    <p class="card-category text-center">
+                                        Please contact the administrator for this error
+                                    </p>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="display-1">
+                                        Internal Server Error
+                                    </h1>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Thanks Before!!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+</html>

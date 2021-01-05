@@ -1,0 +1,207 @@
+<!--   Core JS Files   -->
+<script src="/js/core/jquery.min.js"></script>
+<script src="/js/core/popper.min.js"></script>
+<script src="/js/core/bootstrap.min.js"></script>
+<script src="/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script
+    type="text/javascript"
+    charset="utf8"
+    src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"
+></script>
+<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+<script
+    src="/js/paper-dashboard.min.js?v=2.0.1"
+    type="text/javascript"
+></script>
+<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<script
+    src="https://cdn.tiny.cloud/1/9t8x1940qnt7p8wcc4greew4zlj67zqby2u8sy3kzz13dkhm/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>
+        function editButton() {
+            $(".form-control").attr("readonly", false);
+            $(".form-control").removeClass("plaintext");
+            $(".editable").addClass("true");
+            $('#gender').prop("disabled", false);
+            $('#university').prop("disabled", false);
+            $('#major').prop("disabled", false);
+            $('#province').prop("disabled", false);
+            $('#city').prop("disabled", false);
+            $(".editButton").hide();
+            $(".hidden").show();
+        }
+
+        function cancelButton() {
+            $(".form-control").attr("readonly", true);
+            $(".form-control").addClass("plaintext");
+            $(".editable").removeClass("true");
+            $('#gender').prop("disabled", true);
+            $('#university').prop("disabled", true);
+            $('#major').prop("disabled", true);
+            $('#province').prop("disabled", true);
+            $('#city').prop("disabled", true);
+            $(".editButton").show();
+            $(".hidden").hide();
+        }
+
+        function loadNotification() {
+            $.get("/api/get/notification", function (data) {
+                var html = "";
+
+                if (data.length < 1) {
+                    html += '<a class="dropdown-item">No Notifications</a>';
+                }
+
+                for (var row in data) {
+                    var rowData = Object.values(data[row]);
+
+                    var id = rowData[0];
+                    var status = rowData[1];
+                    var time = moment(rowData[2], "YYYY-MM-DD HH:mm:ss").fromNow();
+                    var message = rowData[3].message;
+                    var reportId = rowData[4].id;
+                    var classes = "";
+                    if (status == 0) {
+                        classes = "unread";
+                    } else {
+                        classes = "read";
+                    }
+
+                    html += '<a class="dropdown-item ' + classes + '" href="/open/' + id + '?url=/admin/report/details/' + reportId + '">' + message + ' <small>' + time + ' ago</small></a>';
+                }
+
+                html += '<hr><a class="dropdown-item" href="admin/notification">>> More Notifications</a>';
+
+                $('.notification-items').html(html);
+            });
+        }
+
+        $(document).ready(function () {
+
+
+            // Alerts Handling
+
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var error = url.searchParams.get("error");
+            var res = url.searchParams.get("res");
+
+            if (error == "login-error") {
+
+                $('.alert-login-error').addClass('show');
+                setTimeout(function () {
+                    $('.alert-login-error').removeClass('show');
+                }, 3000);
+
+            }
+
+            if (res == "addup") {
+                $('.alert-addup').addClass('show');
+                setTimeout(function () {
+                    $('.alert-addup').removeClass('show');
+                }, 3000);
+            }
+
+            if (res == "priority-setup") {
+                $('.alert-priority').addClass('show');
+                setTimeout(function () {
+                    $('.alert-priority').removeClass('show');
+                }, 3000);
+            }
+
+            var path = window.location.pathname;
+
+            if (path.split('/')[1] != "auth") {
+                loadNotification();
+            }
+
+            // Pusher Config
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('75b839e2c030a656a41c', {
+                cluster: 'ap1'
+            });
+            var channel = pusher.subscribe('my-channel');
+            channel.bind('updateNotif', function (data) {
+                if (data.message == 'success') {
+                    const audio = new Audio(window.location.origin + "/notif.mp3");
+                    audio.play();
+                    $('.notif').addClass('new-notif');
+
+                    loadNotification();
+                }
+            });
+
+            $(".notif").click(function () {
+                $('.notif').removeClass('new-notif');
+            });
+            // End pusher
+
+            // DataTable
+            $("#datatable").DataTable();
+
+            // TinyMCE
+            tinymce.init({selector: ".richEditor", height: 300});
+
+            // Select2
+            $('.enable-select2').select2();
+
+            // Navigation Control
+            path = path.split('/');
+            $('.' + path[2] + '-link').addClass('active');
+
+            if (path[1] == "admin" && path[2] == null) {
+                $('.dashboard-link').addClass('active');
+            }
+            // End Navigation
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/serviceWorker.js').then(() => {
+                        console.log('Service Worker Registered');
+                    });
+                });
+
+            }
+
+            var deferredPrompt;
+
+            window.addEventListener('beforeinstallprompt', function (e) {
+
+                console.log('please install application');
+
+                $('.alert-install').addClass('show');
+                setTimeout(function () {
+                    $('.alert-install').removeClass('show');
+                }, 5000);
+
+                e.preventDefault();
+                deferredPrompt = e;
+            });
+
+            $('.install-app').on('click', (e) => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice
+                        .then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted the A2HS prompt');
+                            } else {
+                                console.log('User dismissed the A2HS prompt');
+                            }
+                            deferredPrompt = null;
+                        });
+            });
+
+            window.addEventListener('appinstalled', (evt) => {
+                // Log install to analytics
+            });
+
+
+
+        });
+</script>

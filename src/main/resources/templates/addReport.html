@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Create Report</h5>
+                                    <p class="card-category">Fill the form with valid data</p>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/admin/report/new" method="post" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" th:each="as : ${originator}">
+                                                    <label>Originator</label>
+                                                    <input type="hidden" th:value="${as.id}" name="originator">
+                                                    <input type="hidden" th:value="4" name="priority">
+                                                    <input type="hidden" th:value="1" name="currentStatus">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="Originator"
+                                                        th:value="${as.name}"
+                                                        readonly="readonly"
+                                                        />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Select Room</label>
+                                                    <select class="form-control enable-select2" name="room">
+                                                        <option th:each="as : ${rooms}" th:value="${as.id}" th:text="${as.name} + ', ' + ${as.floor.name} "></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Image Attachments</label>
+                                                    <input type="file" multiple="multiple" class="form-control-file" name="files" />
+                                                    <small class="form-text text-muted"
+                                                           >You can upload more than 1 images</small
+                                                    >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <textarea
+                                                        type="text"
+                                                        class="form-control textarea richEditor"
+                                                        placeholder="Problem Description"
+                                                        name="description"
+                                                        ></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 justify-content-between">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Submit
+                                                </button>
+                                                <button type="reset" class="btn btn-danger">
+                                                    Reset Form
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+</html>

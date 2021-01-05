@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Manage Room</h5>
+                                    <p class="card-category">Create, update, delete room</p>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table" id="datatable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="as, iterator : ${rooms}">
+                                                <th scope="row" th:text="${iterator.index+1}"></th>
+                                                <td th:text="${as.name}"></td>
+                                                <td th:text="${as.description}"></td>
+                                                <td>
+                                                    <a th:href="@{/fladmin/room/perform_delete/} + ${as.id}" class="btn btn-danger btn-sm mr-1">Delete</a>
+                                                    <a th:href="@{/fladmin/room/update/} + ${as.id}" class="btn btn-info btn-sm">Edit</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">New Room</h5>
+                                    <p class="card-category">Fill the form and add room data</p>
+                                </div>
+                                <div class="card-body">
+                                    <form action="/admin/manage_room" method="post" th:object="${room}">
+                                        <input type="hidden" th:field="*{id}">
+                                        <input type="hidden" th:field="*{floor}" name="floor">
+                                        <div class="form-group">
+                                            <label>Room Name</label>
+                                            <input name="name" th:field="*{name}" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Room Description</label>
+                                            <textarea name="description" th:field="*{description}" class="form-control textarea"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            Submit
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+</html>

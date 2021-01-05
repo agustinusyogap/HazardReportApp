@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Report Progress</h5>
+                                    <p class="card-category">Detail of report progress</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div th:each="as : ${report}">
+                                                <div class="row align-items-center justify-content-between" th:each="history : ${as.reportProgressesList}">
+                                                    <div class="col-md-1" th:switch="${history.status.id}">
+                                                        <div th:case="1" class="btn btn-sm btn-danger" th:text="${history.status.name}"></div>
+                                                        <div th:case="6" class="btn btn-sm btn-success" th:text="${history.status.name}"></div>
+                                                        <div th:case="*" class="btn btn-sm btn-warning" th:text="${history.status.name}"></div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <strong class="font-weight-normal" th:text="${history.status.message}"></strong>
+                                                    </div>
+                                                    <div class="col-md-4 text-sm font-weight-bold text-muted" th:text="${#dates.format(history.date, 'HH:mm, dd MMMM yyyy')}"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+</html>

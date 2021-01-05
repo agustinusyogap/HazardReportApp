@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper">
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Detail Action</h5>
+                                    <p class="card-category">
+                                        Please check the form data before create an action
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div th:each="as : ${action}">
+                                                <div class="form-group">
+                                                    <label>Date</label>
+                                                    <div th:utext="${as.date}"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <div th:utext="${as.description}"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Risk</label>
+                                                    <div th:utext="${as.risk}"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Result</label>
+                                                    <div th:utext="${as.result}"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 justify-content-between">
+                                            <a href="javascript:void(0)" onclick="window.history.back()" class="btn btn-primary">
+                                                Back
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="fas fa-check-double"></i> Check your form again
+                                        before submit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+</html>

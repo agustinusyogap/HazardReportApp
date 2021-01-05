@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper ">
+
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row" sec:authorize="hasAnyAuthority('HSE', 'FW')">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="nc-icon nc-globe text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-category">Reported</p>
+                                                <p class="card-title" th:text="${totalReport} + ' case'"><p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer ">
+                                    <hr>
+                                    <a class="stats" href="/admin/report">
+                                        <i class="fa fa-calendar-o"></i>
+                                        View All
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="nc-icon nc-check-2 text-success"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-category">Finished</p>
+                                                <p class="card-title" th:text="${finishedReport} + ' case'"><p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer ">
+                                    <hr>
+                                    <a class="stats" href="/admin/report">
+                                        <i class="fa fa-calendar-o"></i>
+                                        View All
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="nc-icon nc-alert-circle-i text-danger"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-category">Need action</p>
+                                                <p class="card-title" th:text="${newReport} + ' case'"><p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer ">
+                                    <hr>
+                                    <a class="stats" href="/admin/report">
+                                        <i class="fa fa-calendar-o"></i>
+                                        View All
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="nc-icon nc-delivery-fast text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-category">On Process</p>
+                                                <p class="card-title" th:text="${onProcessReport} + ' case'"><p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer ">
+                                    <hr>
+                                    <a class="stats" href="/admin/report">
+                                        <i class="fa fa-calendar-o"></i>
+                                        View All
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-stats">
+                                <div class="card-header ">
+                                    <h5 class="card-title">News</h5>
+                                    <p class="card-category">
+                                        displays the latest news
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group">
+                                        <div class="list-group-item list-group-item-action flex-column align-items-start" th:each="as : ${newsReport}">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1" th:text="'Masalah di ' + ${as.room.floor.name} + ', ' + ${as.room.name} + ' ' + ' terselesaikan' "></h5>
+                                                <small
+                                                    th:text="${#calendars.format(as.reportProgressesList[#lists.size(as.reportProgressesList) - 1].date, 'HH:mm, dd MMMM yyyy')}"></small>
+                                            </div>
+                                            <p class="mb-1" th:utext="${as.description}"></p>
+                                            <small th:text="'Originator : ' + ${as.originator.name}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer ">
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-refresh"></i>
+                                        News Updated!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <h5 class="card-title">Recent Notifications</h5>
+                                    <p class="card-category">
+                                        displays the latest notifications
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group">
+                                        <a class="list-group-item list-group-item-action"
+                                           th:each="as : ${notifications}"
+                                           th:href="@{/open/} + ${as.id} + @{?url=/admin/report/details/} + ${as.report.id}"
+                                           th:text="${as.notificationMessage.message}"
+                                           >
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Welcome to hazardReport
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <h5 class="card-title">User Information</h5>
+                                    <p class="card-category">
+                                        information about you
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" readonly="readonly" th:value="${user.name}" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" readonly="readonly" th:value="${user.username}" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" readonly="readonly" th:value="${user.email}" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Logged In as</label>
+                                        <input type="text" readonly="readonly" th:value="${user.roles.name}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Welcome to hazardReport
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-info alert-dismissible fade alert-install" role="alert" style="z-index: 999999">
+                    <strong>Install App!</strong> <br>For more better experience, <br>please install hazardReportApplication<br>
+                    <button type="button" class="btn btn-dark install-app">
+                        Install
+                    </button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+
+</html>

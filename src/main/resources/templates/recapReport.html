@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <div th:replace="fragments/head"></div>
+
+    <body class="">
+        <div class="wrapper ">
+
+            <div th:replace="fragments/sidebar"></div>
+
+            <div class="main-panel">
+                <!-- Navbar -->
+                <div th:replace="fragments/navbar"></div>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <h5 class="card-title">Manage Report</h5>
+                                    <p class="card-category">Check report and give an action</p>
+                                </div>
+                                <div class="card-body ">
+                                    <div class="col-md-12 text-right">
+                                        <a th:href="@{/admin/generate/pdfreport}" class="btn btn-primary add-modal">
+                                            Print to PDF
+                                        </a>
+                                        <a th:href="@{/admin/generate/excel}" class="btn btn-info add-modal">
+                                            Print to Excel
+                                        </a>
+                                    </div>
+                                    <table class="table" id="datatable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Originator</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Priority</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="as, iterator : ${reports}">
+                                                <th scope="row" th:text="${iterator.index+1}"></th>
+                                                <td th:text="${#calendars.format(as.date, 'HH:mm, dd MMM yy')}"></td>
+                                                <td th:text="${as.originator.name}"></td>
+                                                <td th:text="${as.room.name}"></td>
+                                                <td th:text="${as.priority.name}"></td>
+                                                <td>
+                                                    <div th:switch="${as.currentStatus.id}">
+                                                        <a th:case="1" th:class="@{btn btn-danger btn-sm}" th:text="${as.currentStatus.name}"></a>
+                                                        <a th:case="6" th:class="@{btn btn-success btn-sm}" th:text="${as.currentStatus.name}"></a>
+                                                        <a th:case="*" th:class="@{btn btn-warning btn-sm}" th:text="${as.currentStatus.name}"></a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a th:href="@{/admin/report/details/} + ${as.id}" class="btn btn-info btn-sm">Details</a>
+                                                    <a th:href="@{/admin/report/history/} + ${as.id}" class="btn btn-primary btn-sm">History</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer ">
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer"></div>
+            </div>
+        </div>
+        <div th:replace="fragments/script"></div>
+    </body>
+
+</html>
